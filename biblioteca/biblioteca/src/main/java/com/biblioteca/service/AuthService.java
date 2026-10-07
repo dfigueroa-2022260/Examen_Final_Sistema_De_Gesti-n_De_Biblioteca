@@ -27,6 +27,7 @@ public class AuthService {
         return new UsuarioResponse(u.getId(), u.getNombre(), u.getEmail(), u.getRol(), u.getEstado());
     }
 
+
     public AuthResponse login(LoginRequest r) {
         authManager.authenticate(new UsernamePasswordAuthenticationToken(r.email(), r.password()));
         Usuario u = repo.findByEmail(r.email()).orElseThrow();
