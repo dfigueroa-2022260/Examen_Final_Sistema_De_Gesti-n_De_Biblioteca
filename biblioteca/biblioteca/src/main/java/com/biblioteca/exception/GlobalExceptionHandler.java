@@ -3,6 +3,7 @@ package com.biblioteca.exception;
 import com.biblioteca.dto.Dto.ErrorResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -37,4 +38,7 @@ public class GlobalExceptionHandler {
                 .map(f -> f.getField() + ": " + f.getDefaultMessage()).collect(Collectors.joining("; "));
         return build(HttpStatus.BAD_REQUEST, msg);
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> unreadable(HttpMessageNotReadableException e) { return build(HttpStatus.BAD_REQUEST, "JSON inválido o con caracteres mal codificados"); }
 }
